@@ -1,0 +1,16 @@
+various/*
+.vscode
+.devcontainer/
+__pycache__/
+custom_dataset.py
+resources/data_description.txt
+lightning_logs/
+k8s
+TCP 
+Unix
+sshd_config
+src/backup/
+src/testing/*
+resources/reqs.txt
+*.doc*
+src/utils/*txt
