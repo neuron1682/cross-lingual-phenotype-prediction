@@ -303,63 +303,6 @@ def train_spanish_bert(model,
 
 
     
-"""
-def eval_spanish_bert():
-    trainer = pl.Trainer(precision=16,
-                        gpus=1, 
-                        min_epochs=4, 
-                        max_epochs=400, 
-                        fast_dev_run=False,
-                        #accumulate_grad_batches=8
-                        ) 
-    trainer.test()
-
-if __name__ == "__main__":
-
-    config = {"lr": 2.26e-5,
-            "batch_size": 32,    
-            "num_training_steps": 60,}
-
-    config = {"lr":  2e-5,
-              "batch_size": 8,
-              "acc_grads": 4,
-              "warmup_steps": 0,
-              "num_training_steps":10, 
-              #"max_epochs":4
-            }
-
-    model_names = {"spanish_bert":'dccuchile/bert-base-spanish-wwm-cased',
-                "english_bert": 'bert-base-cased', 
-                "multilingual_bert": 'bert-base-multilingual-cased', 
-                "xlmr": '"xlm-roberta-base"'
-                }
-
-    language ='spanish'
-    task = 'diagnosis'
-    model_name = 'spanish_bert'
-
-    spanish_train_dataset, spanish_dev_dataset, spanish_test_dataset, num_labels = get_data(model_names[model_name],
-                                                                                            task, 
-                                                                                            language,
-                                                                                            batch_size=config["batch_size"]
-                                                                                            )
-
-    model = SpanishBertBaseline(config, num_labels=num_labels, model_name=model_names[model_name])
-
-    trainer = train_spanish_bert(
-                    model=model,
-                    train_data= spanish_train_dataset,
-                    eval_data=spanish_dev_dataset,)
-    
-    print(trainer.validate(val_dataloaders=spanish_dev_dataset))
-    print(trainer.validate(val_dataloaders=spanish_test_dataset))
-    print(trainer.test(test_dataloaders=spanish_test_dataset))
-
-    
-    #[('r52', 145), ('r69', 141), ('r50.9', 139), ('i10', 99), ('r60.9', 95)]
-
-#how to change optimisation goal to max auc and not loss.
-"""
 
 
 class ExtensionSpanishBertBaseline(SpanishBertBaseline):
