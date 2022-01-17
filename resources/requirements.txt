@@ -1,0 +1,14 @@
+adapter-transformers
+pytorch-lightning
+transformers
+gpustat
+pandas
+ray[tune]==1.2.0
+torch_optimizer 
+matplotlib 
+numpy 
+scipy
+scikit-learn
+tensorboardX
+datasets
+hyperopt
