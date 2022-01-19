@@ -14,3 +14,4 @@ src/testing/*
 resources/reqs.txt
 *.doc*
 src/utils/*txt
+dataset_creation/output_files/*
