@@ -94,7 +94,7 @@ def tune_spanish_bert(config,
 
 
 if __name__  == "__main__":
-    
+
     # start ray on cluster or debug locally
     cluster = False
 
@@ -137,6 +137,9 @@ if __name__  == "__main__":
     
     # filename to load labels created by `dataset_creation/pre-process_codie.py`
     filter_set_name = 'ccs_codie'
+    
+    # resources to execute the hpo
+    resources_per_trial = {'cpu': 8, "gpu":1}
 
     # paths to datasets labels and column (translation or original)
     data_paths = {'train_data_path_mimic': f"dataset_creation/output_files/mimic_codiesp_filtered_CCS_train.csv",
@@ -295,7 +298,7 @@ if __name__  == "__main__":
                                             pretrained_model_path=pretrained_model_path,
                                             ),    
                         local_dir=local_dir,
-                        resources_per_trial={'cpu': 8, "gpu":1},
+                        resources_per_trial=resources_per_trial,
                         metric="val_auc",
                         mode="max",
                         config=config,
