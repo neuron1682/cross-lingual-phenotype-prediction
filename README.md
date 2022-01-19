@@ -35,7 +35,7 @@ for the **baseline methods and other knowledge transfer methods** run:
 
 ` python experiments/src/baselines/hpo_spanish_baseline.py`
 
-
+If no GPU is available `resources_per_trial` needs to be adjusted.
 
 
 
