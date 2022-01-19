@@ -12,7 +12,8 @@ RUN mkdir -p /var/run/sshd; \
     mkdir /root/.ssh && chmod 700 /root/.ssh; \
     touch /root/.ssh/authorized_keys
 
-COPY src .
+COPY  dataset_creation/ . 
+COPY  experiments/ .
 
 EXPOSE 22 
 RUN export PYTHONPATH="${PYTHONPATH}:/pvc/"
