@@ -109,8 +109,10 @@ if __name__ == "__main__":
         
         # Is it the first training of the task adapter
         is_first = True
+
         # model name SLA(single language)
         mname = 'SLA' 
+
         # base model where adapters are intergrated
         model_name = 'xlm-roberta-base'
 
@@ -139,11 +141,29 @@ if __name__ == "__main__":
         # just a variable for the naming of the experiments
         mla_order = '_'.join(languages)
         
-        # on only diagnosis task is implemented
-        task = 'diagnosis' #'diagnosis', zero_shot_diag_ccs
+        # only diagnosis task is implemented
+        task = 'diagnosis' 
         
         # is it a test run
         test = True
+
+        # paths to datasets labels and column (translation or original)
+        data_paths = {'train_data_path_mimic': f"dataset_creation/output_files/mimic_codiesp_filtered_CCS_train.csv",
+                'validation_data_path_mimic': f"dataset_creation/output_files/mimic_codiesp_filtered_CCS_dev.csv",
+                'test_data_path_mimic': f"dataset_creation/output_files/mimic_codiesp_filtered_CCS_test.csv",
+                
+                'train_data_path_achepa': f"dataset_creation/output_files/train.csv",
+                'validation_data_path_achepa': f"dataset_creation/output_files/dev.csv",
+                'test_data_path_achepa': f"dataset_creation/output_files/test.csv",
+
+                'train_data_path_codie': f"dataset_creation/output_files/codiesp_CCS_train.csv",
+                'validation_data_path_codie': f"dataset_creation/output_files/codiesp_CCS_dev.csv",
+                'test_data_path_codie': f"dataset_creation/output_files/codiesp_CCS_test.csv",
+
+                'all_labels_path': f"dataset_creation/output_files/{filter_set_name}_labels.pcl",
+                'eval_dataset': eval_dataset,
+                'translator_data_selector': translator_data_selector,
+                }
 
         # Paths to best models to continue training
         task_adapter_mimic_sla_path = '/pvc/raytune_ccs_codie/tune_adapter_mimic_original_SLA/_inner_2c36a0d2_50_first_acc_steps=4,first_attention_dropout=0.1,first_batch_size=8,first_hidden_dropout=0.1,first_lr=0.00042751,f_2021-10-20_00-03-23/training_output_en_0.0004275118309968961_0/checkpoint-13914/'
@@ -154,12 +174,14 @@ if __name__ == "__main__":
         task_adapter_achepa_mimic_mla_path = '/pvc/raytune_ccs_codie/tune_adapter_greek_english_diagnosis_MLA/_inner_3a0ea5a2_41_first_acc_steps=0,first_attention_dropout=0,first_batch_size=8,first_hidden_dropout=0,first_lr=0,first_num_epoc_2021-11-16_03-20-21/training_output_en_0_0.0017506470138346506/checkpoint-6176'
         task_adapter_codie_mimic_mla_path = '/pvc/raytune_ccs_codie/tune_adapter_spanish_english_diagnosis_MLA/_inner_7ceb71c6_34_first_acc_steps=0,first_attention_dropout=0,first_batch_size=8,first_hidden_dropout=0,first_lr=0,first_num_epoc_2021-11-15_14-43-55/training_output_en_0_0.0008006564657455058/checkpoint-6957'
         
-        if not first:
-                
+        if first:
+                # first training
                 task_adapter_path = None
         else:
                 # select path of best model to continue training from 
                 task_adapter_path = task_adapter_mimic_sla_path
+
+
 
         '''
                 Naming of the experiments
@@ -202,10 +224,8 @@ if __name__ == "__main__":
 
         if test:
 
-                experiment_name = experiment_name+"_TEST"           
-        '''
-                finish experiment naming 
-        '''
+                experiment_name = experiment_name + "_TEST"           
+
 
         
         '''
@@ -274,23 +294,6 @@ if __name__ == "__main__":
 
         utils.set_seeds(seed=config['seed'])
 
-        data_paths = {'train_data_path_mimic': f"dataset_creation/output_files/mimic_codiesp_filtered_CCS_train.csv",
-                'validation_data_path_mimic': f"dataset_creation/output_files/mimic_codiesp_filtered_CCS_dev.csv",
-                'test_data_path_mimic': f"dataset_creation/output_files/mimic_codiesp_filtered_CCS_test.csv",
-                
-                'train_data_path_achepa': f"dataset_creation/output_files/train.csv",
-                'validation_data_path_achepa': f"dataset_creation/output_files/dev.csv",
-                'test_data_path_achepa': f"dataset_creation/output_files/test.csv",
-
-                'train_data_path_codie': f"dataset_creation/output_files/codiesp_CCS_train.csv",
-                'validation_data_path_codie': f"dataset_creation/output_files/codiesp_CCS_dev.csv",
-                'test_data_path_codie': f"dataset_creation/output_files/codiesp_CCS_test.csv",
-
-                'all_labels_path': f"dataset_creation/output_files/{filter_set_name}_labels.pcl",
-                'eval_dataset': eval_dataset,
-                'translator_data_selector': translator_data_selector,
-                }
-
 
         search = HyperOptSearch(
                             config,
@@ -347,8 +350,6 @@ if __name__ == "__main__":
                         mode="max",
                         config=config,
                         num_samples=50,
-                        #metric="loss",
-                        #mode='min',
                         scheduler=scheduler,
                         search_alg=search,
                         progress_reporter=reporter,
