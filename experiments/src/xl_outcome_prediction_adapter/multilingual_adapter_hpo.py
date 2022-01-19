@@ -151,19 +151,19 @@ if __name__ == "__main__":
         resources_per_trial = {'cpu': 8, "gpu":1}
 
         # paths to datasets labels and column (translation or original)
-        data_paths = {'train_data_path_mimic': f"dataset_creation/output_files/mimic_codiesp_filtered_CCS_train.csv",
-                'validation_data_path_mimic': f"dataset_creation/output_files/mimic_codiesp_filtered_CCS_dev.csv",
-                'test_data_path_mimic': f"dataset_creation/output_files/mimic_codiesp_filtered_CCS_test.csv",
+        data_paths = {'train_data_path_mimic': f"/pvc/output_files/mimic_codiesp_filtered_CCS_train.csv",
+                'validation_data_path_mimic': f"/pvc/dataset_creation/output_files/mimic_codiesp_filtered_CCS_dev.csv",
+                'test_data_path_mimic': f"/pvc/output_files/mimic_codiesp_filtered_CCS_test.csv",
                 
-                'train_data_path_achepa': f"dataset_creation/output_files/train.csv",
-                'validation_data_path_achepa': f"dataset_creation/output_files/dev.csv",
-                'test_data_path_achepa': f"dataset_creation/output_files/test.csv",
+                'train_data_path_achepa': f"/pvc/output_files/train.csv",
+                'validation_data_path_achepa': f"/pvc/output_files/dev.csv",
+                'test_data_path_achepa': f"/pvc/output_files/test.csv",
 
-                'train_data_path_codie': f"dataset_creation/output_files/codiesp_CCS_train.csv",
-                'validation_data_path_codie': f"dataset_creation/output_files/codiesp_CCS_dev.csv",
-                'test_data_path_codie': f"dataset_creation/output_files/codiesp_CCS_test.csv",
+                'train_data_path_codie': f"/pvc/output_files/codiesp_CCS_train.csv",
+                'validation_data_path_codie': f"/pvc//output_files/codiesp_CCS_dev.csv",
+                'test_data_path_codie': f"/pvc/output_files/codiesp_CCS_test.csv",
 
-                'all_labels_path': f"dataset_creation/output_files/{filter_set_name}_labels.pcl",
+                'all_labels_path': f"/pvc/output_files/{filter_set_name}_labels.pcl",
                 'eval_dataset': eval_dataset,
                 'translator_data_selector': translator_data_selector,
                 }
