@@ -147,6 +147,9 @@ if __name__ == "__main__":
         # is it a test run
         test = True
 
+        # resources to execute the hpo
+        resources_per_trial = {'cpu': 8, "gpu":1}
+
         # paths to datasets labels and column (translation or original)
         data_paths = {'train_data_path_mimic': f"dataset_creation/output_files/mimic_codiesp_filtered_CCS_train.csv",
                 'validation_data_path_mimic': f"dataset_creation/output_files/mimic_codiesp_filtered_CCS_dev.csv",
@@ -345,7 +348,7 @@ if __name__ == "__main__":
                                                 task_adapter_path=task_adapter_path
                                                 ),    
                         local_dir= f"/pvc/raytune_{filter_set_name}/",
-                        resources_per_trial={'cpu': 8, "gpu":1},
+                        resources_per_trial=resources_per_trial,
                         metric="eval_val_auc",
                         mode="max",
                         config=config,
