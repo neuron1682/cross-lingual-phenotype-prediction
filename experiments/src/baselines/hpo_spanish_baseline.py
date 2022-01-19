@@ -22,7 +22,7 @@ from pytorch_lightning.callbacks.early_stopping import EarlyStopping
 from pytorch_lightning.callbacks import ModelCheckpoint
 from ray.tune.schedulers import AsyncHyperBandScheduler
 from ray.tune.suggest.hyperopt import HyperOptSearch
-
+import pdb
 from hyperopt import hp
 import math
 
@@ -32,6 +32,7 @@ def tune_spanish_bert(config,
                     data_paths,
                     language,
                     pretrained_model_path,
+                    resources_per_trial,
                     ):
 
     utils.set_seeds(seed=config['seed'])
@@ -55,12 +56,10 @@ def tune_spanish_bert(config,
                                     num_training_steps=max_steps
                                     )
 
-                                    
-    trainer = Trainer_Extended(#precision=16,
-                        gpus=1,
+    pdb.set_trace()        
+    trainer = Trainer_Extended(
+                        gpus=resources_per_trial['gpu'],
                         max_steps=1e6,
-                        #min_epochs=4, 
-                        #max_epochs=config['max_epochs'], 
                         accumulate_grad_batches=config["acc_grads"],
                         fast_dev_run=False,
                         logger=TensorBoardLogger(save_dir=tune.get_trial_dir(),
@@ -142,19 +141,19 @@ if __name__  == "__main__":
     resources_per_trial = {'cpu': 8, "gpu":1}
 
     # paths to datasets labels and column (translation or original)
-    data_paths = {'train_data_path_mimic': f"dataset_creation/output_files/mimic_codiesp_filtered_CCS_train.csv",
-                'validation_data_path_mimic': f"dataset_creation/output_files/mimic_codiesp_filtered_CCS_dev.csv",
-                'test_data_path_mimic': f"dataset_creation/output_files/mimic_codiesp_filtered_CCS_test.csv",
+    data_paths = {'train_data_path_mimic': f"/pvc/output_files/mimic_codiesp_filtered_CCS_train.csv",
+                'validation_data_path_mimic': f"/pvc/output_files/mimic_codiesp_filtered_CCS_dev.csv",
+                'test_data_path_mimic': f"/pvc/output_files/mimic_codiesp_filtered_CCS_test.csv",
 
-                'train_data_path_achepa': f"dataset_creation/output_files/train.csv",
-                'validation_data_path_achepa': f"dataset_creation/output_files/dev.csv",
-                'test_data_path_achepa': f"dataset_creation/output_files/test.csv",
+                'train_data_path_achepa': f"/pvc/output_files/train.csv",
+                'validation_data_path_achepa': f"/pvc/output_files/dev.csv",
+                'test_data_path_achepa': f"/pvc/output_files/test.csv",
 
-                'train_data_path_codie': f"dataset_creation/output_files/codiesp_CCS_train.csv",
-                'validation_data_path_codie': f"dataset_creation/output_files/codiesp_CCS_dev.csv",
-                'test_data_path_codie': f"dataset_creation/output_files/codiesp_CCS_test.csv",
+                'train_data_path_codie': f"/pvc/output_files/codiesp_CCS_train.csv",
+                'validation_data_path_codie': f"/pvc/output_files/codiesp_CCS_dev.csv",
+                'test_data_path_codie': f"/pvc/output_files/codiesp_CCS_test.csv",
 
-                'all_labels_path': f"dataset_creation/output_files/{filter_set_name}_labels.pcl",
+                'all_labels_path': f"/pvc/output_files/{filter_set_name}_labels.pcl",
                 'eval_dataset': eval_dataset,
                 'translator_data_selector': translator_data_selector,
                 }
@@ -207,6 +206,7 @@ if __name__  == "__main__":
         else:
              dataset_name = f"mimic_original"
         experiment_name = f"{dataset_name}_{mname}"
+
     elif language == 'greek':
         if translator_data_selector is not None:
             dataset_name = f"achepa_{translator_data_selector}"
@@ -220,6 +220,7 @@ if __name__  == "__main__":
     
     if translator_data_selector:
         local_dir = f"/pvc/raytune_{filter_set_name}/translation_models"
+
     else:
          local_dir = f"/pvc/raytune_{filter_set_name}/"
     
@@ -296,6 +297,7 @@ if __name__  == "__main__":
                                             data_paths=data_paths,
                                             language=language,
                                             pretrained_model_path=pretrained_model_path,
+                                            resources_per_trial=resources_per_trial,
                                             ),    
                         local_dir=local_dir,
                         resources_per_trial=resources_per_trial,
@@ -310,9 +312,9 @@ if __name__  == "__main__":
     
     
     best_config = trainer.get_best_config()
-    with open(f"/pvc/tasks/codie_ccs_based_data/{experiment_name}_best_config_{filter_set_name}_fold_{nfold}.pcl",'wb') as f: 
+    with open(f"/pvc/tasks/codie_ccs_based_data/{experiment_name}_best_config_{filter_set_name}.pcl",'wb') as f: 
         pickle.dump(best_config, f)
 
-    trainer.best_result_df.to_csv(f"/pvc/tasks/codie_ccs_based_data/{experiment_name}__best_result_{filter_set_name}_fold_{nfold}.csv", index=False)
-    trainer.dataframe().to_csv(f"/pvc/tasks/codie_ccs_based_data/{experiment_name}__best_result_{filter_set_name}_fold_{nfold}.csv", index=False)
+    trainer.best_result_df.to_csv(f"/pvc/tasks/codie_ccs_based_data/{experiment_name}__best_result_{filter_set_name}.csv", index=False)
+    trainer.dataframe().to_csv(f"/pvc/tasks/codie_ccs_based_data/{experiment_name}__best_result_{filter_set_name}.csv", index=False)
     
