@@ -30,15 +30,11 @@ run:
 
 `python experiments/src/xl_outcome_prediction_adapter/multilingual_adapter_hpo.py`
 
-Settings: 
-
-
 
 for the **baseline methods and other knowledge transfer methods** run: 
 
 ` python experiments/src/baselines/hpo_spanish_baseline.py`
 
-Settings: 
 
 
 
