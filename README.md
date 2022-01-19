@@ -21,21 +21,19 @@ CodiEsp : https://zenodo.org/record/3837305#.YeVsnLzMJhF
 
 **Run experiments:**
 
-First create a Docker environment with the provided Dockerfile  
-or
-create a conda environment and install all required packages from  `requirements.txt`
+-   Now create a Docker environment with the provided   Dockerfile
 
-To run the hyperparameter optimisation for the **adapters** 
-run: 
+- the created datasets will be copied into the `pvc` folder of your docker image once started.
 
-`python experiments/src/xl_outcome_prediction_adapter/multilingual_adapter_hpo.py`
+Run the **hyperparameter optimisation** 
+
+1) for the **adapters** 
+ adjust paths and settings in `experiments/src/xl_outcome_prediction_adapter/multilingual_adapter_hpo.py` and execute the file.
 
 
-for the **baseline methods and other knowledge transfer methods** run: 
+2) for the **baseline methods and other knowledge transfer methods** adjust paths and settings in `experiments/src/xl_outcome_prediction_adapter/multilingual_adapter_hpo.py` and execute the file.
 
-` python experiments/src/baselines/hpo_spanish_baseline.py`
 
-If no GPU is available `resources_per_trial` needs to be adjusted.
 
 
 
