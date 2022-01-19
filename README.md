@@ -23,7 +23,7 @@ CodiEsp : https://zenodo.org/record/3837305#.YeVsnLzMJhF
 
 -   Now create a Docker environment with the provided   Dockerfile
 
-- the created datasets will be copied into the `pvc` folder of your docker image once started.
+- the created datasets will be copied into the `/pvc/output_files` folder.
 
 Run the **hyperparameter optimisation** 
 
