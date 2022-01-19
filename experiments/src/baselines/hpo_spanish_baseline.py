@@ -22,7 +22,6 @@ from pytorch_lightning.callbacks.early_stopping import EarlyStopping
 from pytorch_lightning.callbacks import ModelCheckpoint
 from ray.tune.schedulers import AsyncHyperBandScheduler
 from ray.tune.suggest.hyperopt import HyperOptSearch
-import pdb
 from hyperopt import hp
 import math
 
@@ -56,7 +55,7 @@ def tune_spanish_bert(config,
                                     num_training_steps=max_steps
                                     )
 
-    pdb.set_trace()        
+       
     trainer = Trainer_Extended(
                         gpus=resources_per_trial['gpu'],
                         max_steps=1e6,
