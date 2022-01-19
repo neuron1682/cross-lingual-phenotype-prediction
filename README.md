@@ -32,7 +32,7 @@ Settings:
 
 
 
-for the **baseline methods and other knowledge transfer methods** run `experiments/src/baselines/hpo_spanish_baseline.py`
+for the **baseline methods and other knowledge transfer methods** run ` python experiments/src/baselines/hpo_spanish_baseline.py`
 
 Settings: 
 
