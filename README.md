@@ -36,7 +36,7 @@ Run the **hyperparameter optimisation**
  adjust paths and settings in `experiments/src/xl_outcome_prediction_adapter/multilingual_adapter_hpo.py` and execute the file.
 
 
-2) for the **baseline methods and other knowledge transfer methods** adjust paths and settings in `experiments/src/xl_outcome_prediction_adapter/multilingual_adapter_hpo.py` and execute the file.
+2) for the **baseline methods and other knowledge transfer methods** adjust paths and settings in `experiments/src/baselines/hpo_spanish_baseline.py` and execute the file.
 
 
 
