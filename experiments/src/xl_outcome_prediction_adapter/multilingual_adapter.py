@@ -24,36 +24,7 @@ LANGUAGE_ADAPTERS = {'english': "en/wiki@ukp",
                     'spanish': "es/wiki@ukp", 
                     'greek':   "el/wiki@ukp"
                     }
-'''
-def get_data(data_path, is_train): 
-  
-        data_class = codiespDataset(data_path)
-        codiesp_dataset, all_labels = data_class.load_codiesp_dataset()
-        codiesp_dataset = data_class.tokenize_dataset(codiesp_dataset)
-        codiesp_dataset = data_class.transform_labels(codiesp_dataset, 
-                                                    all_labels=all_labels)
-        if is_train:
-            dataset = concatenate_datasets([codiesp_dataset["train"], 
-                                            codiesp_dataset["validation"]])
-        else: 
-            dataset = codiesp_dataset["validation"]
 
-        num_labels = len(all_labels)
-        print(codiesp_dataset.num_rows)
-        return dataset, num_labels
-
-def get_datav2(data_path, train_lng=None): 
-  
-        data_class = codiespDataset(data_path)
-        #codiesp_dataset, all_labels = data_class.load_codiesp_dataset()
-        codiesp_dataset, all_labels = data_class.load_codiesp_mixed_lng_dataset(train_lng)
-        codiesp_dataset = data_class.tokenize_dataset(codiesp_dataset)
-        codiesp_dataset = data_class.transform_labels(codiesp_dataset, 
-                                                     all_labels=all_labels)
-        num_labels = len(all_labels)
-        print(codiesp_dataset.num_rows)
-        return codiesp_dataset["train"], codiesp_dataset["validation"], num_labels
-'''
 class AdapterSetup():
     def __init__(self, num_labels, languages, task_adapter_name, is_first, task_adapter_path, config, model_name="xlm-roberta-base"):
         '''
@@ -239,10 +210,6 @@ class AdapterTrainer():
 
             val_ndcg_k = ndcg(y_true[:,cols], torch.sigmoid(y_pred[:,cols]), k=None)
             val_ndcg_5 = ndcg(y_true[:,cols], torch.sigmoid(y_pred[:,cols]), k=min(5, len(cols)))
-            #val_ndcg_10 = ndcg(y_true[:,cols], torch.sigmoid(y_pred[:,cols]), k=min(10, len(cols)))
-            #val_ndcg_25 = ndcg(y_true[:,cols], torch.sigmoid(y_pred[:,cols]), k=min(25, len(cols)))
-            #val_ndcg_100 = ndcg(y_true[:,cols], torch.sigmoid(y_pred[:,cols]), k=min(100, len(cols)))
-            #val_ndcg_250 = ndcg(y_true[:,cols], torch.sigmoid(y_pred[:,cols]), k=min(250, len(cols)))
             
             print("AUC score:", avg_auc_score, "PR AUC score", avg_pr_auc, 'micro_auc', micro_auc_score)
             return {
