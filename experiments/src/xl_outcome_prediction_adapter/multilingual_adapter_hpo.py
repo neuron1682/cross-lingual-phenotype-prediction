@@ -52,7 +52,6 @@ def tune_adapter(config,
         utils.set_seeds(seed=config['seed'])
         ########################### SETUP ADAPTER ########################### 
         #first_train_language = language
-        #train_data_path = f'/pvc/codiesp/xl-training-data/v4/{task}_task/rebalanced/{first_train_language}_clinical_text'
         train_dataset, dev_dataset, _, labels = utils.get_datav2(data_paths,
                                                                 dataset_name=dataset_name)
 
@@ -177,7 +176,7 @@ if __name__ == "__main__":
         task_adapter_achepa_mimic_mla_path = '/pvc/raytune_ccs_codie/tune_adapter_greek_english_diagnosis_MLA/_inner_3a0ea5a2_41_first_acc_steps=0,first_attention_dropout=0,first_batch_size=8,first_hidden_dropout=0,first_lr=0,first_num_epoc_2021-11-16_03-20-21/training_output_en_0_0.0017506470138346506/checkpoint-6176'
         task_adapter_codie_mimic_mla_path = '/pvc/raytune_ccs_codie/tune_adapter_spanish_english_diagnosis_MLA/_inner_7ceb71c6_34_first_acc_steps=0,first_attention_dropout=0,first_batch_size=8,first_hidden_dropout=0,first_lr=0,first_num_epoc_2021-11-15_14-43-55/training_output_en_0_0.0008006564657455058/checkpoint-6957'
         
-        if first:
+        if is_first:
                 # first training
                 task_adapter_path = None
         else:
@@ -236,18 +235,18 @@ if __name__ == "__main__":
         '''
         if is_first:
                 config = {"first_lr": hp.uniform("first_lr", 1e-5, 1e-2),
-                        "second_lr": 0,#hp.uniform("second_lr", 1e-5, 1e-2),
+                        "second_lr": 0,
                         'first_batch_size': 8,
                         'second_batch_size': 0,
                         'per_device_eval_batch_size': 8,
                         "first_acc_steps": hp.choice("first_acc_steps", [1, 2, 4, 8, 16, 32]),
-                        "second_acc_steps": 0,#hp.choice("second_acc_steps", [1, 2, 4, 8, 16]),
+                        "second_acc_steps": 0,
                         "first_warmup_steps": hp.choice("first_warmup_steps", [0, 10, 250, 500, 750]),
-                        "second_warmup_steps": 0, #hp.choice("second_warmup_steps", [0, 10, 250, 500, 750]),
+                        "second_warmup_steps": 0, 
                         'first_weight_decay': 0,
                         'second_weight_decay': 0,
-                        'first_num_epochs':  100, #hp.choice("first_num_epochs", [10, 30, 50, 80, 100, 150]), 
-                        'second_num_epochs': 1,#hp.choice("second_num_epochs", [10, 30, 50, 80, 100, 150]),
+                        'first_num_epochs':  100, 
+                        'second_num_epochs': 1,
                         'seed': 42, 
                         'first_hidden_dropout': hp.choice('first_hidden_dropout', [0.1, 0.3, 0.5, 0.8]),
                         'first_attention_dropout': hp.choice('first_attention_dropout', [0.1, 0.3, 0.5, 0.8]),
@@ -255,19 +254,19 @@ if __name__ == "__main__":
                         'second_attention_dropout': 0,
                         }
         else:
-                config = {"first_lr": 0,#hp.uniform("first_lr", 1e-5, 1e-2),
+                config = {"first_lr": 0,
                         "second_lr": hp.uniform("second_lr", 1e-5, 1e-2),
                         'first_batch_size': 8,
                         'second_batch_size': 8,
                         'per_device_eval_batch_size': 8,
-                        "first_acc_steps": 0,#hp.choice("first_acc_steps", [1, 2, 4, 8, 16, 32]),
+                        "first_acc_steps": 0,
                         "second_acc_steps": hp.choice("second_acc_steps", [1, 2, 4, 8, 16]),
-                        "first_warmup_steps": 0,#hp.choice("first_warmup_steps", [0, 10, 250, 500, 750]),
+                        "first_warmup_steps": 0,
                         "second_warmup_steps": hp.choice("second_warmup_steps", [0, 10, 250, 500, 750]),
                         'first_weight_decay': 0,
                         'second_weight_decay': 0,
-                        'first_num_epochs':  100,#hp.choice("first_num_epochs", [10, 30, 50, 80, 100, 150]), 
-                        'second_num_epochs': 100,#hp.choice("second_num_epochs", [10, 30, 50, 80, 100, 150]),
+                        'first_num_epochs':  100,
+                        'second_num_epochs': 100,
                         'seed': 42,
                         'second_hidden_dropout': hp.choice('second_hidden_dropout', [0.1, 0.3, 0.5, 0.8]),
                         'second_attention_dropout': hp.choice('second_attention_dropout', [0.1, 0.3, 0.5, 0.8]),
@@ -275,8 +274,8 @@ if __name__ == "__main__":
                         'first_attention_dropout': 0,
                         }
 
-        defaults = [{"first_lr": 1e-4, #hp.loguniform("first_lr", 2e-5, 1e-2),
-                "second_lr": 1e-5, #hp.loguniform("second_lr", 2e-5, 1e-2),
+        defaults = [{"first_lr": 1e-4, 
+                "second_lr": 1e-5, 
                 'first_batch_size': 8,
                 'second_batch_size': 8,
                 'per_device_eval_batch_size': 8,
@@ -307,8 +306,6 @@ if __name__ == "__main__":
 
 
         scheduler = AsyncHyperBandScheduler(
-                                                #metric="eval_val_auc_avg",
-                                                #mode="max",
                                                 brackets=1,
                                                 grace_period=2,
                                                 reduction_factor=4,
@@ -328,12 +325,6 @@ if __name__ == "__main__":
                                         ],
 
                         metric_columns=["eval_val_pr_auc",
-                                        #'val_f1',            
-                                       #"val_recall",
-                                       #"val_precision",
-                                       #"val_selected_f1",
-                                       #"val_selected_precision",
-                                       #"val_selected_recall", 
                                         ]
                             )
 
