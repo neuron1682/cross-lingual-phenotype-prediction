@@ -351,11 +351,11 @@ if __name__ == "__main__":
                         checkpoint_at_end=True,)
 
         best_config = analysis.get_best_config()
-        with open(f"/pvc/tasks/codie_ccs_based_data/{experiment_name}_best_config_{filter_set_name}_fold_{nfold}.pcl",'wb') as f: 
+        with open(f"/pvc/tasks/codie_ccs_based_data/{experiment_name}_best_config_{filter_set_name}.pcl",'wb') as f: 
                 pickle.dump(best_config, f)
 
-        analysis.best_result_df.to_csv(f"/pvc/tasks/codie_ccs_based_data/{experiment_name}_best_result_{filter_set_name}_fold_{nfold}.csv", index=False)
-        analysis.dataframe().to_csv(f"/pvc/tasks/codie_ccs_based_data/{experiment_name}_best_result_{filter_set_name}_fold_{nfold}.csv", index=False)
+        analysis.best_result_df.to_csv(f"/pvc/tasks/codie_ccs_based_data/{experiment_name}_best_result_{filter_set_name}.csv", index=False)
+        analysis.dataframe().to_csv(f"/pvc/tasks/codie_ccs_based_data/{experiment_name}_best_result_{filter_set_name}.csv", index=False)
                 
 
         
