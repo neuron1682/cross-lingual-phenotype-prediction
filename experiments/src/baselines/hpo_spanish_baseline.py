@@ -70,13 +70,6 @@ def tune_spanish_bert(config,
                                                         "val_loss": "val_loss",
                                                         'val_auc': 'val_auc',
                                                         'val_pr_auc': 'val_pr_auc'
-                                                        #"val_selected_auc": "val_selected_auc",
-                                                        #'val_f1': 'val_f1',            
-                                                        #"val_recall": 'val_recall',
-                                                        #"val_precision": 'val_precision',
-                                                        #"val_selected_f1": 'val_selected_f1',
-                                                        #"val_selected_precision": 'val_selected_precision',
-                                                        #"val_selected_recall": 'val_selected_recall',
                                                         }, 
                                                     on="validation_end"), 
                                     EarlyStopping(monitor='val_auc', patience=5, mode='max'), 
@@ -279,14 +272,6 @@ if __name__  == "__main__":
                                         'val_auc',
                                         'val_pr_auc',                                        
                                         ]
-                                        
-                                        #"val_selected_auc",
-                                        #'val_f1',            
-                                        #"val_recall",
-                                        #"val_precision",
-                                        #"val_selected_f1",
-                                        #"val_selected_precision",
-                                        #"val_selected_recall", ]
                             )
 
 
