@@ -117,20 +117,6 @@ if __name__ == '__main__':
     eval_model = eval_models[mname]
     data_paths = evaluation_utils.get_data_paths(nfold, filter_set_name, eval_dataset, translator_data_selector)
 
-    '''  
-    dict_keys(['achepa_original_greek_bert', 
-    'achepa_original_xlmr', 
-    'codie_original_spanish_bert', 
-    'codie_original_xlmr', 
-    'codie_original_spanish_biobert', 
-    'mimic_original_pubmedBert', 
-    'achepa_opus_pubmed', 
-    'codie_off_pubmed', 
-    'mimic_achepa_opus_pubmed', 
-    'mimic_achepa_codie_off_pubmed', 
-    'mimic_codie_off_pubmed', 
-    'achepa_codie_off_pubmed'])
-    '''
     
     if eval_type == 'few_shot_ccs':
         #{'min':1, 'max':5}, 
