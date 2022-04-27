@@ -56,22 +56,6 @@ def tune_adapter(config,
         train_dataset, dev_dataset, _, labels = utils.get_datav2(data_paths,
                                                                 dataset_name=dataset_name)
 
-        codie_cond = task == 'zero_shot_diag_ccs' and dataset_name == 'codie'
-        achepa_cond = task == 'zero_shot_diag_achepa' and dataset_name == 'achepa'
-                                                  
-        if codie_cond or achepa_cond: 
-                # TODO load selected labels
-                ccs = utils.load_zero_shot_ccs_codes(data_paths)
-                data_class = codiespDataset(data_paths, dataset_name)
-                label_to_pos, _ = data_class.label_to_pos(all_codes=labels)
-                selected_labels = utils.get_zero_shot_ccs_idx(label_to_pos, ccs)
-                train_dataset = train_dataset.map(lambda x: manipulate_zero_shot_diagnosis(x, selected_labels))
-                dev_dataset = dev_dataset.map(lambda x: manipulate_zero_shot_diagnosis(x, selected_labels))
-
-        elif task == 'zero_shot_diag_css' or task == 'zero_shot_diag_achepa': 
-                logger.warning('zero_shot_diag is only valid for codiesp for ccs and for achepa for achepa diagnoses')
-                raise
-
         task_adapter_name = f'codiesp_diagnosis_v4'
 
         codieSP_adapter = AdapterSetup(task_adapter_path=task_adapter_path,
@@ -94,7 +78,7 @@ def tune_adapter(config,
                                 dataset_name=dataset_name, 
                                 )
         
-        
+
 if __name__ == "__main__":
         
         # start ray on cluster or debug locally
