@@ -123,8 +123,6 @@ class AdapterTrainer():
 
         adapter_task_lng_model.set_active_adapters(adapter_setup)
         adapter_task_lng_model.train_adapter([self.task_adapter_name])
-        if dataset_name == 'codie':
-            adapter_task_lng_model.freeze_model(False)
         return adapter_task_lng_model
 
     def get_score_every_class(self, outputs): 
