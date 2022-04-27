@@ -286,64 +286,6 @@ def load_codiesp(data_paths, eval_dataset):
             except: 
                 print("test_data_cutoff is not splitted in create_dataset.py because no test set is used")
         
-
-
-        '''
-        elif data_paths['translator_data_selector'] in ['official_translation', 'Opus_el_en']:#'Opus_es_to_en', 'GT_es_to_en']:
-            train_data = pd.read_csv(data_paths[f"translation_train_data_path_codie_en"])
-            train_data = train_data[['patient_id', 
-                                    'ICD10', 
-                                    'len_notes',
-                                    data_paths['translator_data_selector']]]
-            train_data = train_data.rename(columns={'ICD10':'label',
-                                        data_paths['translator_data_selector']: "notes"})
-            train_data.labels = train_data.labels.apply(lambda row: ast.literal_eval(row))
-
-            dev_data = pd.read_csv(data_paths[f"translation_validation_data_path_codie_en"])
-            dev_data = dev_data[['patient_id', 
-                                'ICD10', 
-                                'len_notes',
-                                data_paths['translator_data_selector']]]
-
-            dev_data = dev_data.rename(columns={'ICD10':'label',
-                                        data_paths['translator_data_selector']: "notes"})
-            dev_data.labels = dev_data.labels.apply(lambda row: ast.literal_eval(row))
-
-            test_data = pd.read_csv(data_paths[f"translation_test_data_path_codie_en"])
-            test_data = test_data[['patient_id', 
-                                'ICD10', 
-                                'len_notes',
-                                data_paths['translator_data_selector']]]
-
-            test_data = test_data.rename(columns={'ICD10':'label',
-                                        data_paths['translator_data_selector']: "notes"})
-            test_data.labels = test_data.labels.apply(lambda row: ast.literal_eval(row))
-
-        
-
-        elif data_paths['translator_data_selector'] in ['Opus_es_en_concat_notes', 'GT_es_en_concat_notes']:
-            train_data = pd.read_csv(data_paths[f"concat_train_data_path_mimic_codie_en"])
-            train_data = train_data[['patient_id', 
-                                    'ICD10', 
-                                    data_paths['translator_data_selector']]]
-            train_data = train_data.rename(columns={'ICD10':'label',
-                                        data_paths['translator_data_selector']: "notes"})
-            train_data.labels = train_data.labels.apply(lambda row: ast.literal_eval(row))
-
-            dev_data = pd.read_csv(data_paths[f"concat_validation_data_path_mimic_codie_en"]).rename(columns={'ICD10':'label',
-                                                                                            data_paths['translator_data_selector']: "notes"})
-            dev_data.labels = dev_data.labels.apply(lambda row: ast.literal_eval(row))
-            dev_data = dev_data.rename(columns={'ICD10':'label',
-                                        data_paths['translator_data_selector']: "notes"})
-            
-
-            test_data = pd.read_csv(data_paths[f"concat_test_data_path_mimic_codie_en"]).rename(columns={'ICD10':'label',
-                                                                                    data_paths['translator_data_selector']: "notes"})                                          
-            test_data = test_data.rename(columns={'ICD10':'label',
-                                        data_paths['translator_data_selector']: "notes"})
-            test_data.labels = test_data.labels.apply(lambda row: ast.literal_eval(row))
-        '''
-        
         with open(data_paths['all_labels_path'], 'rb') as f: 
             labels = pickle.load(f)
     
