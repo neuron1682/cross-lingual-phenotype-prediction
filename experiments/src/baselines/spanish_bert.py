@@ -127,8 +127,6 @@ class SpanishBertBaseline(pl.LightningModule):
         self.log('train_loss', train_loss, on_step=True, on_epoch=False)
         return {'loss': train_loss, 'log': tensorboard_logs}
 
-    #def training_epoch_end(self, outputs: List[Any]) -> None:
-    #    return super().training_epoch_end(outputs)
 
     def validation_step(self, batch, batch_idx):
         b_input_ids = batch[0]
@@ -266,6 +264,7 @@ class SpanishBertBaseline(pl.LightningModule):
                     'interval': 'step',  # The unit of the scheduler's step size
                     'frequency': 1  # The frequency of the scheduler
                     }
+                    
         return [optimizer], [lr_scheduler]
        
 
