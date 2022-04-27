@@ -34,6 +34,7 @@ from src.utils import utils
 from src.utils.trainer_callback import EarlyStoppingCallback
 import pickle
 
+
 def tune_adapter(config,
                 model_name, 
                 task, 
@@ -93,6 +94,7 @@ def tune_adapter(config,
                                 dataset_name=dataset_name, 
                                 )
         
+        
 if __name__ == "__main__":
         
         # start ray on cluster or debug locally
@@ -116,7 +118,8 @@ if __name__ == "__main__":
         model_name = 'xlm-roberta-base'
 
         # column name of the text with English Translation
-        ''' None if you want the original language '''
+        ''' 'None' if you want the original language elsewise you have to use the name of the column that contains
+        the translation '''
         translator_data_selector = None #'Opus_es_en_concat_notes'
         
         # filename to load labels
@@ -143,13 +146,13 @@ if __name__ == "__main__":
         # only diagnosis task is implemented
         task = 'diagnosis' 
         
-        # is it a test run
+        # is it a test run USED for naming
         test = True
 
         # resources to execute the hpo
         resources_per_trial = {'cpu': 8, "gpu":1}
 
-        # paths to datasets labels and column (translation or original)
+        # paths to datasets labels and columnname for translation or not (translation or original)
         data_paths = {'train_data_path_mimic': f"/pvc/output_files/mimic_codiesp_filtered_CCS_train.csv",
                 'validation_data_path_mimic': f"/pvc/dataset_creation/output_files/mimic_codiesp_filtered_CCS_dev.csv",
                 'test_data_path_mimic': f"/pvc/output_files/mimic_codiesp_filtered_CCS_test.csv",
