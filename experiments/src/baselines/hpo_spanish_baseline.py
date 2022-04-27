@@ -25,6 +25,7 @@ from ray.tune.suggest.hyperopt import HyperOptSearch
 from hyperopt import hp
 import math
 
+
 def tune_spanish_bert(config, 
                     model_name,
                     task, 
@@ -221,6 +222,7 @@ if __name__  == "__main__":
     '''
                 settings for hyperparameter tuning
     '''    
+
     config = {"lr": hp.uniform("lr", 5e-6, 8e-5),
               "batch_size": 8,
               "acc_grads": hp.choice("acc_grads", [1, 2, 4, 8, 16]),
