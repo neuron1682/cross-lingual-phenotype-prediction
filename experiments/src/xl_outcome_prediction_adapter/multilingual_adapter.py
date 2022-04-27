@@ -18,12 +18,16 @@ from transformers.integrations import MLflowCallback
 from src.utils.trainer_callback import *
 from sklearn.metrics import precision_recall_curve
 from sklearn.metrics import auc
-import pandas as pd 
+import pandas as pd
+import pickle
+
 
 LANGUAGE_ADAPTERS = {'english': "en/wiki@ukp", 
                     'spanish': "es/wiki@ukp", 
                     'greek':   "el/wiki@ukp"
                     }
+
+
 
 class AdapterSetup():
     def __init__(self, num_labels, languages, task_adapter_name, is_first, task_adapter_path, config, model_name="xlm-roberta-base"):
@@ -71,6 +75,7 @@ class AdapterSetup():
                                                         config=base_model_config,)
         return base_model
 
+
     def setup_language_adapter(self,
                             languages, 
                             base_model): 
@@ -81,6 +86,7 @@ class AdapterSetup():
                                     AdapterType.text_lang, 
                                     config=lang_adapter_config,)
         return base_model
+
 
     def add_task_adapter(self,
                         task_adapter_path, 
@@ -109,6 +115,7 @@ class AdapterTrainer():
         self.task_adapter_name = task_adapter_name
         self.model = model
 
+
     def prepare_task_adapter_training(self,
                                     adapter_task_lng_model, 
                                     lm_model_code, 
@@ -125,8 +132,9 @@ class AdapterTrainer():
         adapter_task_lng_model.train_adapter([self.task_adapter_name])
         return adapter_task_lng_model
 
+
     def get_score_every_class(self, outputs): 
-        import pickle
+        
 
         auc = [x["auc"] for x in outputs]
         pr_auc = [x["pr_auc"] for x in outputs]
@@ -158,7 +166,6 @@ class AdapterTrainer():
         return auc_all_df.mean(axis=0), pr_auc_all_df.mean(axis=0), pr_auc_all_df.count(axis=0)
 
             
-
     def compute_metrics(self, is_first, p: EvalPrediction):
             label_ids_tmp = torch.tensor(p.label_ids)
             predictions_tmp = torch.tensor(p.predictions)
@@ -223,6 +230,7 @@ class AdapterTrainer():
                         'y_true': y_true, 
                         'y_pred': y_pred
                     }
+
 
     def train_adapter(self,
                     is_first,
@@ -337,8 +345,7 @@ class AdapterTrainer():
 
         #self.model = model
 
-        
-    
+
     def prepare_task_adapter_evaluation(self,  
                                         lm_model_code, 
                                         ):
@@ -352,7 +359,6 @@ class AdapterTrainer():
         return adapter_setup
 
    
-
     def evaluate_adapter(self, is_trained, eval_dataset, lm_model_code, num_labels):
 
         adapter_setup = self.prepare_task_adapter_evaluation(lm_model_code)
