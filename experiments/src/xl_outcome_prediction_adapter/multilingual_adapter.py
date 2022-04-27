@@ -30,6 +30,7 @@ LANGUAGE_ADAPTERS = {'english': "en/wiki@ukp",
 
 
 class AdapterSetup():
+
     def __init__(self, num_labels, languages, task_adapter_name, is_first, task_adapter_path, config, model_name="xlm-roberta-base"):
         '''
             language and task specify path of the data
@@ -58,7 +59,6 @@ class AdapterSetup():
                                                             multilabel=True,
                                                             )
 
-
     def setup_base_model(self, 
                         model_name,
                         config, 
@@ -75,7 +75,6 @@ class AdapterSetup():
                                                         config=base_model_config,)
         return base_model
 
-
     def setup_language_adapter(self,
                             languages, 
                             base_model): 
@@ -86,7 +85,6 @@ class AdapterSetup():
                                     AdapterType.text_lang, 
                                     config=lang_adapter_config,)
         return base_model
-
 
     def add_task_adapter(self,
                         task_adapter_path, 
@@ -108,13 +106,13 @@ class AdapterSetup():
 
 
 class AdapterTrainer(): 
+
     def __init__(self, 
                 task_adapter_name, 
                 model,):
 
         self.task_adapter_name = task_adapter_name
         self.model = model
-
 
     def prepare_task_adapter_training(self,
                                     adapter_task_lng_model, 
@@ -131,7 +129,6 @@ class AdapterTrainer():
         adapter_task_lng_model.set_active_adapters(adapter_setup)
         adapter_task_lng_model.train_adapter([self.task_adapter_name])
         return adapter_task_lng_model
-
 
     def get_score_every_class(self, outputs): 
         
@@ -164,8 +161,7 @@ class AdapterTrainer():
         pr_auc_all_df = pr_auc_all_df.replace(0, np.NaN)
         
         return auc_all_df.mean(axis=0), pr_auc_all_df.mean(axis=0), pr_auc_all_df.count(axis=0)
-
-            
+  
     def compute_metrics(self, is_first, p: EvalPrediction):
             label_ids_tmp = torch.tensor(p.label_ids)
             predictions_tmp = torch.tensor(p.predictions)
@@ -230,7 +226,6 @@ class AdapterTrainer():
                         'y_true': y_true, 
                         'y_pred': y_pred
                     }
-
 
     def train_adapter(self,
                     is_first,
@@ -345,7 +340,6 @@ class AdapterTrainer():
 
         #self.model = model
 
-
     def prepare_task_adapter_evaluation(self,  
                                         lm_model_code, 
                                         ):
@@ -358,7 +352,6 @@ class AdapterTrainer():
         self.model.set_active_adapters(adapter_setup)
         return adapter_setup
 
-   
     def evaluate_adapter(self, is_trained, eval_dataset, lm_model_code, num_labels):
 
         adapter_setup = self.prepare_task_adapter_evaluation(lm_model_code)
