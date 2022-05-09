@@ -1,4 +1,5 @@
-# cross-lingual-phenotype-prediction
+# CROSS-LINGUAL KNOWLEDGE TRANSFER
+FOR CLINICAL PHENOTYPING
 
 
 
