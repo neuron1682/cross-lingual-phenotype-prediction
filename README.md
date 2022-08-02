@@ -41,7 +41,7 @@ Run the **hyperparameter optimisation**
 2) for the **baseline methods and other knowledge transfer methods** adjust paths and settings in `experiments/src/baselines/hpo_spanish_baseline.py` and execute the file.
 
 
-#Cite: 
+# Cite: 
 ```
 @InProceedings{papaioannou-EtAl:2022:LREC,
   author    = {Papaioannou, Jens-Michalis  and  Grundmann, Paul  and  van Aken, Betty  and  Samaras, Athanasios  and  Kyparissidis, Ilias  and  Giannakoulas, George  and  Gers, Felix  and  Loeser, Alexander},
