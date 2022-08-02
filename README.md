@@ -1,7 +1,7 @@
 # CROSS-LINGUAL KNOWLEDGE TRANSFER FOR CLINICAL PHENOTYPING
 
-implemtation of the paper: 
-http://www.lrec-conf.org/proceedings/lrec2022/pdf/2022.lrec-1.95.pdf
+This repository contains source code for the task creation and experiments from our paper  
+[Cross-Lingual Knowledge Transfer for Clinical Phenotyping](http://www.lrec-conf.org/proceedings/lrec2022/pdf/2022.lrec-1.95.pdf), LREC 2022
 
 
 How to use: 
