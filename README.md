@@ -42,7 +42,7 @@ Run the **hyperparameter optimisation**
 
 
 Citation: 
-`
+```
 @InProceedings{papaioannou-EtAl:2022:LREC,
   author    = {Papaioannou, Jens-Michalis  and  Grundmann, Paul  and  van Aken, Betty  and  Samaras, Athanasios  and  Kyparissidis, Ilias  and  Giannakoulas, George  and  Gers, Felix  and  Loeser, Alexander},
   title     = {Cross-Lingual Knowledge Transfer for Clinical Phenotyping},
@@ -55,9 +55,7 @@ Citation:
   abstract  = {Clinical phenotyping enables the automatic extraction of clinical conditions from patient records, which can be beneficial to doctors and clinics worldwide. However, current state-of-the-art models are mostly applicable to clinical notes written in English. We therefore investigate cross-lingual knowledge transfer strategies to execute this task for clinics that do not use the English language and have a small amount of in-domain data available. Our results reveal two strategies that outperform the state-of-the-art: Translation-based methods in combination with domain-specific encoders and cross-lingual encoders plus adapters. We find that these strategies perform especially well for classifying rare phenotypes and we advise on which method to prefer in which situation. Our results show that using multilingual data overall improves clinical phenotyping models and can compensate for data sparseness.},
   url       = {https://aclanthology.org/2022.lrec-1.95}
 }
-`
-
-
+```
 
 
 
