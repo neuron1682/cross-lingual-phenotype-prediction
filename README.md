@@ -1,5 +1,7 @@
-# cross-lingual-phenotype-prediction
+# CROSS-LINGUAL KNOWLEDGE TRANSFER FOR CLINICAL PHENOTYPING
 
+This repository contains source code for the task creation and experiments from our paper  
+[Cross-Lingual Knowledge Transfer for Clinical Phenotyping](http://www.lrec-conf.org/proceedings/lrec2022/pdf/2022.lrec-1.95.pdf), LREC 2022
 
 
 How to use: 
@@ -39,8 +41,21 @@ Run the **hyperparameter optimisation**
 2) for the **baseline methods and other knowledge transfer methods** adjust paths and settings in `experiments/src/baselines/hpo_spanish_baseline.py` and execute the file.
 
 
-
-
+# Cite: 
+```
+@InProceedings{papaioannou-EtAl:2022:LREC,
+  author    = {Papaioannou, Jens-Michalis  and  Grundmann, Paul  and  van Aken, Betty  and  Samaras, Athanasios  and  Kyparissidis, Ilias  and  Giannakoulas, George  and  Gers, Felix  and  Loeser, Alexander},
+  title     = {Cross-Lingual Knowledge Transfer for Clinical Phenotyping},
+  booktitle      = {Proceedings of the Language Resources and Evaluation Conference},
+  month          = {June},
+  year           = {2022},
+  address        = {Marseille, France},
+  publisher      = {European Language Resources Association},
+  pages     = {900--909},
+  abstract  = {Clinical phenotyping enables the automatic extraction of clinical conditions from patient records, which can be beneficial to doctors and clinics worldwide. However, current state-of-the-art models are mostly applicable to clinical notes written in English. We therefore investigate cross-lingual knowledge transfer strategies to execute this task for clinics that do not use the English language and have a small amount of in-domain data available. Our results reveal two strategies that outperform the state-of-the-art: Translation-based methods in combination with domain-specific encoders and cross-lingual encoders plus adapters. We find that these strategies perform especially well for classifying rare phenotypes and we advise on which method to prefer in which situation. Our results show that using multilingual data overall improves clinical phenotyping models and can compensate for data sparseness.},
+  url       = {https://aclanthology.org/2022.lrec-1.95}
+}
+```
 
 
 
