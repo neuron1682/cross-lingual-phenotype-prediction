@@ -16,22 +16,6 @@ class codiespDataset():
     self.data_paths = data_paths
    
   def load_codiesp_dataset(self):
-    '''
-    'train': f'{self.data_path}/{self.language}_train_data_cutoff.csv',
-    'validation': f'{self.data_path}//{self.language}_dev_data_cutoff.csv',
-    'test':f'{self.data_path}//{self.language}_test_data_cutoff.csv',
-    
-    if self.language == 'english':
-      dataset = load_dataset('csv', data_files={'train': self.data_paths['train_data_path_en'],
-                                                'validation': self.data_paths['validation_data_path_en'],
-                                                'test': self.data_paths['test_data_path_en'],
-                                              })
-    elif self.language == 'spanish': 
-      dataset = load_dataset('csv', data_files={'train': self.data_paths['train_data_path_es'],
-                                                'validation': self.data_paths['validation_data_path_es'],
-                                                'test': self.data_paths['test_data_path_es'],
-                                              })
-    '''
 
     if not self.data_paths['translator_data_selector']:
 
@@ -60,18 +44,6 @@ class codiespDataset():
       all_labels = pickle.load(f)
     return dataset, all_labels
 
-  '''
-  def load_codiesp_mixed_lng_dataset(self, train_lng):
-    
-    dataset = load_dataset('csv', data_files={'train': f'{self.data_path}/{train_lng}_half_train_data_cutoff.csv',
-                                            'validation': f'{self.data_path}//dev_data_cutoff.csv'})
-    logging.warning(f' number of samples: {dataset.num_rows}')
-
-    with open(f'{self.data_path}/all_codes_cutoff.json') as f: 
-            all_labels = json.load(f)['all_D_codes']
-
-    return dataset, all_labels
-  '''
   def encode_batch(self, batch):
     """Encodes a batch of input data using the model tokenizer."""
     if not self.data_paths['translator_data_selector']:
@@ -115,13 +87,6 @@ class codiespDataset():
     dataset.set_format(type='torch')
     self.dataset = dataset
     return dataset
-
-
-#### create label array/ create utils file
-### create github possibility 
-## update baseline github 
-### train with zero shot prediction and measure auc 
-### incorporate multilingual knowledge
 
 
 if __name__ == "__main__":
